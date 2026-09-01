@@ -1,17 +1,16 @@
 const express = require("express");
+const episodeRoutes = require("./routes/episode_routes");
 
 const app = express();
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
+app.get("/health", (req, res) => {
   res.json({
-    message: "API do desafio ZRP!",
+    message: "API ZRP!",
   });
 });
 
-app.get("/health", (req, res) => {
-  res.json({ status: "ok" });
-});
+app.use("/episode", episodeRoutes);
 
 module.exports = app;
