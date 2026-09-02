@@ -1,20 +1,21 @@
 function errorHandler(err, req, res, next) {
-  console.error("Erro:", err);
+  console.error("Error:", err);
 
   const status = err.status || 500;
 
   return res.status(status).json({
-    sucesso: false,
-    mensagem: status === 500
-      ? "Erro interno do servidor"
-      : err.message,
+    success: false,
+    message:
+      status === 503
+        ? "External Rick and Morty API unavailable."
+        : err.message || "Internal server error.",
   });
 }
 
 function notFound(req, res) {
   return res.status(404).json({
-    sucesso: false,
-    mensagem: "Rota não encontrada",
+    success: false,
+    message: "Route not found.",
   });
 }
 

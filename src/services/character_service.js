@@ -1,29 +1,24 @@
-// Importa o model do personagem
 const Character = require("../models/character_model");
+const { externalFetch } = require("../utils/external_fetch");
 
-// Recebe a URL do personagem e busca seus dados
 async function getCharacters(ids) {
   if (ids.length === 0) {
     return [];
   }
 
-  // get do personagens 
-  const response = await fetch(
+  const response = await externalFetch(
     `https://rickandmortyapi.com/api/character/${ids}`
   );
 
-  // Lança um erro se a requisição não foi bem-sucedida
   if (!response.ok) {
-    throw new Error("Erro ao buscar personagem.");
+    const error = new Error("Failed to fetch characters.");
+    error.status = response.status;
+    throw error;
   }
 
-  // Converte o corpo da resposta JSON em um objeto JavaScript
   const json = await response.json();
-
-  // Com apenas um ID, a API retorna um objeto em vez de uma lista
   const characters = Array.isArray(json) ? json : [json];
 
-  // Transforma cada personagem no model
   return characters.map((data) => Character.fromJson(data));
 }
 
