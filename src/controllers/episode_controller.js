@@ -1,6 +1,6 @@
 const episodeService = require("../services/episode_service");
 
-async function getById(req, res) {
+async function getById(req, res, next) {
     // Recebe o ID informado na URL: /episode/28
     const { id } = req.params;
 
@@ -29,9 +29,7 @@ async function getById(req, res) {
         console.error("Erro completo:", error);
 
         // Trata falhas na consulta à API externa
-        return res.status(502).json({
-            error: "Não foi possível consultar a API do Rick and Morty.",
-        });
+        return next(error);
     }
 }
 

@@ -26,11 +26,22 @@ npm run dev
 
 ## Executar com Docker
 
-Com o Docker Desktop iniciado:
+Com o Docker Desktop iniciado, execute na raiz do projeto:
 
 ```bash
-docker build -t rickmorty-api .
-docker run --rm -p 3000:3000 --name rickmorty-api rickmorty-api
+docker compose up --build -d
+```
+
+Para acompanhar os logs:
+
+```bash
+docker compose logs -f
+```
+
+Para parar e remover os containers do projeto:
+
+```bash
+docker compose down
 ```
 
 ## Endpoint
